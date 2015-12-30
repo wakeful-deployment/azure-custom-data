@@ -1,7 +1,5 @@
 #!/bin/bash
 
-set -e
-
 description=$@
 user="wakeful-deployment"
 repo="azure-custom-data"
