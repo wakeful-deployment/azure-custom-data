@@ -8,7 +8,9 @@ sha=""
 
 echo "Preparing release for ${tag}..."
 
-go build
+rm $repo
+
+go build ${repo}.go
 
 if [[ $? != "0" ]]; then
   echo "Failed to compile"
