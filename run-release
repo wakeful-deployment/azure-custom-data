@@ -1,0 +1,24 @@
+#!/bin/bash
+
+description=$@
+repo="azure-custom-data"
+tag=v$(cat VERSION)
+tagfound=$(git tag -l $tag | wc -l | tr -d ' ')
+
+if [[ "$tagfound" != "1" ]]; then
+  echo "Tagging ${tag}..."
+  git tag $tag
+  git push --tags
+fi
+
+which docker-machine
+
+if [[ $? = "0" ]]; then
+  eval $(docker-machine env default)
+fi
+
+rel="${repo}-release"
+
+docker build -t $rel .
+docker ps -a --format "{{.Names}} {{.ID}}" | grep $rel | awk '{ print $2 }' | xargs docker rm
+docker run -it -e GITHUB_TOKEN=$GITHUB_TOKEN --name $rel $rel ./release $description

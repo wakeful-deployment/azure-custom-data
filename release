@@ -1,0 +1,58 @@
+#!/bin/bash
+
+description=$@
+user="wakeful-deployment"
+repo="azure-custom-data"
+tag=v$(cat VERSION)
+sha=""
+
+echo "Preparing release for ${tag}..."
+
+go build
+
+if [[ $? != "0" ]]; then
+  echo "Failed to compile"
+  exit 1
+fi
+
+go test ./...
+
+if [[ $? != "0" ]]; then
+  echo "Tests failed"
+  exit 1
+fi
+
+found_tag=$(git tag -l $tag | wc -l)
+
+if [[ $found_tag != "1" ]]; then
+  echo "You need to tag this release and push:"
+  echo "$ git tag $tag"
+  echo "$ git push --tags"
+  exit 1
+fi
+
+zipfile="${repo}-x86-linux.zip"
+zip $zipfile $repo
+
+sha=$(sha256sum -b $zipfile | awk '{ print $1 }')
+echo SHA256 $sha
+description="$description
+SHA256: \`$sha\`"
+echo Description: $description
+
+github-release info -u $user -r $repo -t $tag | grep -q "\- $tag, name:"
+
+if [[ $? != 0 ]]; then
+  echo "Pushing release to github..."
+  github-release release -u $user -r $repo -t $tag -d "$description"
+fi
+
+github-release info -u $user -r $repo -t $tag | grep -q "\- artifact: $repo"
+
+if [[ $? = "0" ]]; then
+  echo "There is already a file uploaded, please remove to replace with new zip file"
+  exit 1
+else
+  echo "Uploading the compiled binary..."
+  github-release upload -u $user -r $repo -t $tag -f $zipfile -n $zipfile
+fi
