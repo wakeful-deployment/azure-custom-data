@@ -20,3 +20,9 @@ $ sudo azure-custom-data
 ```
 
 :boom:
+
+## XML?
+
+The xml file is located at `/var/lib/waagent/ovf-env.xml`.
+
+Yeah.
