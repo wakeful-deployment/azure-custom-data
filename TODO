@@ -1,0 +1,2 @@
+- Better error handling
+- Check for CustomData (don't assume it's always there)

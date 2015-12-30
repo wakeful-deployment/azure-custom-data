@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Environment xmlns="http://schemas.dmtf.org/ovf/environment/1" xmlns:oe="http://schemas.dmtf.org/ovf/environment/1" xmlns:wa="http://schemas.microsoft.com/windowsazure" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+    <wa:ProvisioningSection><wa:Version>1.0</wa:Version><LinuxProvisioningConfigurationSet xmlns="http://schemas.microsoft.com/windowsazure" xmlns:i="http://www.w3.org/2001/XMLSchema-instance"><ConfigurationSetType>LinuxProvisioningConfiguration</ConfigurationSetType><HostName>example</HostName><UserName>example</UserName><UserPassword>password</UserPassword><DisableSshPasswordAuthentication>false</DisableSshPasswordAuthentication><SSH><PublicKeys /></SSH><CustomData>eyJuYW1lIjoiZXhhbXBsZSIsInNpemUiOiJCYXNpY19BMSIsImxvY2F0aW9uIjoiZWFzdHVzIiwicmVzb3VyY2VfZ3JvdXAiOiJleGFtcGxlIiwiY3JlYXRlZF9hdCI6IjE0NTE0ODY4MzIuNzIwMjMwOCJ9</CustomData></LinuxProvisioningConfigurationSet></wa:ProvisioningSection>
+
+  <wa:PlatformSettingsSection><wa:Version>1.0</wa:Version><PlatformSettings xmlns="http://schemas.microsoft.com/windowsazure" xmlns:i="http://www.w3.org/2001/XMLSchema-instance"><KmsServerHostname>kms.core.windows.net</KmsServerHostname><ProvisionGuestAgent>false</ProvisionGuestAgent><GuestAgentPackageName i:nil="true" /></PlatformSettings></wa:PlatformSettingsSection>
+</Environment>
